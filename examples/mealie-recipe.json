@@ -1,0 +1,49 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Recipe",
+  "name": "Lemon Herb Salmon with Roasted Broccoli",
+  "description": "A simple weeknight salmon dinner with roasted broccoli and lemon-herb seasoning.",
+  "recipeCuisine": "Mediterranean-inspired",
+  "recipeCategory": "Dinner",
+  "recipeYield": "2 servings",
+  "totalTime": "PT35M",
+  "recipeIngredient": [
+    "2 salmon fillets (6 oz each)",
+    "1 large broccoli crown, cut into florets",
+    "1 lemon",
+    "2 tbsp olive oil, divided",
+    "2 cloves garlic, minced",
+    "1 tsp dried oregano"
+  ],
+  "recipeInstructions": [
+    {
+      "@type": "HowToStep",
+      "text": "Preheat the oven to 425°F."
+    },
+    {
+      "@type": "HowToStep",
+      "text": "Toss the broccoli with 1 tablespoon olive oil and arrange it on a baking sheet."
+    },
+    {
+      "@type": "HowToStep",
+      "text": "Roast the broccoli for 10 minutes."
+    },
+    {
+      "@type": "HowToStep",
+      "text": "Brush the salmon with the remaining olive oil and season with garlic, oregano, and lemon."
+    },
+    {
+      "@type": "HowToStep",
+      "text": "Add the salmon to the baking sheet and roast for 12 to 15 minutes, until the salmon is cooked through and the broccoli is tender."
+    }
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "calories": "500-560 calories"
+  },
+  "keywords": [
+    "weeknight",
+    "salmon",
+    "Mediterranean-inspired"
+  ]
+}
