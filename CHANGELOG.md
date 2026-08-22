@@ -39,6 +39,8 @@ The format is based loosely on Keep a Changelog, with an emphasis on practical p
 * Renamed the project to AI Meal Planner
 * Renamed the Open WebUI model export to use the `ai-meal-planner` identifier
 * Removed user-specific and runtime metadata from the public Open WebUI export
+* Reframed Mealie as an optional integration rather than the primary user workflow
+* Prioritized portable recipe, shopping-list, and meal-plan exports ahead of direct Mealie API integration
 
 ### Planned
 

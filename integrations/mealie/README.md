@@ -1,20 +1,16 @@
 # Mealie Integration
 
-This directory is reserved for direct Mealie integration with AI Meal Planner.
+Mealie is an optional recipe-management integration for AI Meal Planner.
 
-Direct API integration is **not implemented yet**.
+AI Meal Planner does not require Mealie.
 
-The current supported workflow is documented in:
+The core project is intended to work as a standalone meal planner with portable recipe and shopping-list outputs.
 
-```text
-docs/mealie-export.md
-```
+Mealie support extends that workflow for users who want recipe storage, meal scheduling, shopping, and other recipe-management features.
 
-## Current Workflow
+## Current Status
 
-Today, AI Meal Planner can generate Schema.org Recipe JSON for recipes selected by the user.
-
-The workflow is:
+The current Mealie workflow is supported and has been tested successfully.
 
 ```text
 AI Meal Planner
@@ -23,7 +19,7 @@ AI Meal Planner
        v
 Generated recipe
        |
-       | Request Mealie export
+       | Export as Mealie JSON
        v
 Schema.org Recipe JSON
        |
@@ -32,82 +28,71 @@ Schema.org Recipe JSON
 Mealie
 ```
 
-This keeps the core meal-planning prompt independent of Mealie.
-
-## Planned Integration
-
-A future Mealie integration may allow requests such as:
+Current status:
 
 ```text
-Send Tuesday's recipe to Mealie.
+Schema.org Recipe export: supported
+Manual Mealie import: tested and supported
+Direct Mealie API integration: planned
 ```
 
-or:
+The current export format is documented in:
 
 ```text
-Add Monday, Wednesday, and Friday to Mealie.
+docs/mealie-export.md
 ```
 
-The integration layer would be responsible for communicating with the Mealie API.
+## Tested Workflow
 
-Possible responsibilities include:
+A generated recipe was exported by AI Meal Planner as Schema.org Recipe JSON and imported successfully into a real Mealie installation.
 
-* connecting to a configured Mealie server
-* authenticating securely
-* submitting one or more recipes
-* validating API responses
-* detecting import failures
-* returning information about successfully created recipes
-* avoiding duplicate recipes where practical
+During initial testing, the import first returned HTTP `401 Unauthorized` because the Mealie browser session was no longer valid.
 
-## Configuration
+After logging out and back in, the same recipe JSON imported successfully.
 
-Mealie-specific configuration must remain outside the canonical meal-planning prompt.
+This confirmed that the generated Schema.org Recipe structure was accepted by the tested Mealie installation.
 
-Examples include:
+## Relationship to Portable Exports
+
+Mealie is no longer the immediate next development priority.
+
+The next major project direction is portable output that benefits all users, including those who do not use a recipe manager.
+
+Planned portable outputs include:
+
+* individual Markdown recipe files
+* a complete weekly meal-plan file
+* mobile-friendly shopping checklists
+* plain-text shopping lists
+* downloadable meal-plan bundles
+
+A typical future workflow may look like:
 
 ```text
-MEALIE_URL
-MEALIE_API_TOKEN
+AI Meal Planner
+       |
+       v
+Weekly Meal Plan
+       |
+       +--> weekly-plan.md
+       |
+       +--> shopping-list.md
+       |
+       +--> shopping-list.txt
+       |
+       +--> recipes/
+       |      sunday-chicken.md
+       |      monday-shrimp.md
+       |      ...
+       |
+       +--> optional Mealie export
 ```
 
-Exact configuration names and implementation details will be determined when API integration is developed.
-
-Secrets such as API tokens must never be committed to the repository.
-
-## Separation of Responsibilities
-
-The project is designed around three separate layers:
-
-```text
-prompt/meal-planner.md
-        |
-        | Meal planning behavior
-        v
-Schema.org Recipe JSON
-        |
-        | Integration boundary
-        v
-integrations/mealie/
-        |
-        | Mealie-specific API behavior
-        v
-Mealie
-```
-
-The canonical prompt should not need to know:
-
-* the Mealie server URL
-* API credentials
-* network details
-* authentication implementation
-* Mealie-specific API endpoints
-
-Those details belong in the integration layer.
+This keeps Mealie useful without making it a requirement.
 
 ## Why Schema.org Recipe
 
-AI Meal Planner currently uses Schema.org Recipe JSON as the recipe interchange format.
+AI Meal Planner uses Schema.org Recipe JSON for Mealie recipe export.
 
 This provides a documented and portable structure for:
 
@@ -119,11 +104,86 @@ This provides a documented and portable structure for:
 * cuisine information
 * calorie estimates
 
-Using a standard recipe representation also helps keep future integrations from becoming tightly coupled to one recipe-management application.
+Using a standard recipe representation helps keep the project from becoming tightly coupled to Mealie.
+
+It may also make future recipe-management integrations easier to support.
+
+## Separation of Responsibilities
+
+The project keeps meal planning, portable output, and external integrations separate.
+
+```text
+prompt/meal-planner.md
+        |
+        | Meal-planning behavior
+        v
+Generated meal plan
+        |
+        +--> Portable human-readable files
+        |
+        +--> Schema.org Recipe JSON
+                    |
+                    v
+            integrations/mealie/
+                    |
+                    v
+                  Mealie
+```
+
+The canonical prompt should not need to know:
+
+* the Mealie server URL
+* API credentials
+* network details
+* authentication implementation
+* Mealie-specific API endpoints
+
+Those details belong in the Mealie integration layer.
+
+## Direct API Integration
+
+Direct Mealie API integration remains a future enhancement.
+
+A future integration may allow requests such as:
+
+```text
+Send Tuesday's recipe to Mealie.
+```
+
+or:
+
+```text
+Add Monday, Wednesday, and Friday to Mealie.
+```
+
+The integration layer would then be responsible for:
+
+* connecting to a configured Mealie server
+* authenticating securely
+* submitting one or more recipes
+* validating API responses
+* detecting import failures
+* returning information about successfully created recipes
+* avoiding duplicate recipes where practical
+
+## Configuration
+
+When direct API integration is implemented, Mealie-specific configuration must remain outside the canonical meal-planning prompt.
+
+Possible configuration values may include:
+
+```text
+MEALIE_URL
+MEALIE_API_TOKEN
+```
+
+Exact names and implementation details will be determined when the integration is developed.
+
+Secrets such as API tokens must never be committed to the repository.
 
 ## Future Work
 
-Potential Mealie integration work includes:
+Potential Mealie-specific work includes:
 
 * [ ] determine the supported Mealie API workflow for recipe creation
 * [ ] create a reusable API client
@@ -139,16 +199,6 @@ Potential Mealie integration work includes:
 * [ ] interact with Mealie meal plans
 * [ ] interact with Mealie shopping lists when appropriate
 
-These features should remain optional.
+These features remain optional.
 
-AI Meal Planner must continue to work as a standalone prompt without requiring Mealie.
-
-## Status
-
-Current status:
-
-```text
-Schema.org Recipe export: supported
-Manual Mealie import: supported
-Direct Mealie API integration: planned
-```
+AI Meal Planner must continue to work without Mealie.

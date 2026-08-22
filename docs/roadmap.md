@@ -41,6 +41,88 @@ Version 1.0 focuses on making the existing working prompt clean, documented, and
 * [x] Preserve consolidated grocery-list generation
 * [x] Preserve final consistency validation
 
+# Version 1.1 — Portable Meal Plan Exports
+
+Version 1.1 focuses on making AI Meal Planner useful outside any specific AI interface or recipe-management application.
+
+The goal is to let an ordinary user generate a meal plan and then save or use the results on a computer, phone, or tablet without needing to understand JSON, APIs, or Mealie.
+
+## Recipe Exports
+
+* [ ] Export each generated recipe as a separate Markdown file
+* [ ] Use readable, filesystem-safe recipe filenames
+* [ ] Include recipe name, servings, time, calories, ingredients, and instructions
+* [ ] Preserve optional prep-ahead information
+* [ ] Keep recipe files human-readable without requiring special software
+
+Example:
+
+```text
+recipes/
+    sunday-pan-seared-chicken.md
+    monday-shrimp-zucchini-stir-fry.md
+    tuesday-turkey-black-bean-tacos.md
+```
+
+## Shopping List Exports
+
+* [ ] Export the consolidated shopping list as Markdown
+* [ ] Format the Markdown version as a mobile-friendly checklist
+* [ ] Export the shopping list as plain text
+* [ ] Preserve grocery-store section organization
+* [ ] Use practical purchase quantities
+* [ ] Make the output easy to copy into common notes and checklist applications
+
+Example:
+
+```markdown
+## Produce
+
+- [ ] 1 pint cherry tomatoes
+- [ ] 2 ears corn
+- [ ] 1 bunch basil
+- [ ] 1 red onion
+```
+
+## Weekly Plan Export
+
+* [ ] Export the complete weekly plan as Markdown
+* [ ] Preserve all generated recipes
+* [ ] Include the consolidated shopping list
+* [ ] Include weekly prep opportunities
+* [ ] Keep the file readable independently of the AI chat that created it
+
+## Meal Plan Bundle
+
+A future portable export may create a complete meal-plan package such as:
+
+```text
+meal-plan/
+├── weekly-plan.md
+├── shopping-list.md
+├── shopping-list.txt
+└── recipes/
+    ├── sunday-chicken.md
+    ├── monday-shrimp.md
+    ├── tuesday-tacos.md
+    └── ...
+```
+
+Possible goals include:
+
+* [ ] create all files from one generated weekly plan
+* [ ] keep filenames predictable and readable
+* [ ] package the files into a downloadable archive when supported
+* [ ] ensure the bundle remains useful without Open WebUI or Mealie
+
+## Relationship to Mealie
+
+Mealie remains a supported integration, but direct API integration is no longer the immediate next development priority.
+
+Portable recipe and shopping-list exports should be implemented first because they are useful to everyone, whether or not they use Mealie.
+
+The current manual Schema.org JSON export to Mealie remains supported.
+
 ## Mealie Export
 
 * [x] Support Schema.org Recipe output

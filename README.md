@@ -73,6 +73,38 @@ Mealie can then be used for recipe storage, meal scheduling, shopping, and cooki
 
 Direct Mealie API integration is planned as a future enhancement.
 
+## Portable Outputs
+
+AI Meal Planner is intended to be useful even when the user does not use Mealie or another recipe-management system.
+
+The next development priority is portable output that can be saved, downloaded, or used on common devices.
+
+Planned outputs include:
+
+* individual recipe files in Markdown
+* a complete weekly meal-plan file
+* a mobile-friendly shopping checklist
+* a plain-text shopping list
+* a downloadable meal-plan bundle containing the weekly plan, shopping list, and individual recipes
+
+A future bundle may look like:
+
+```text
+meal-plan/
+├── weekly-plan.md
+├── shopping-list.md
+├── shopping-list.txt
+└── recipes/
+    ├── sunday-chicken.md
+    ├── monday-shrimp.md
+    ├── tuesday-tacos.md
+    └── ...
+```
+
+These files are intended to be useful on a computer, phone, or tablet without requiring users to understand JSON or APIs.
+
+Mealie remains an optional integration for users who want recipe-management features.
+
 ## Features
 
 ### Meal Planning
