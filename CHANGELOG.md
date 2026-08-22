@@ -30,6 +30,7 @@ The format is based loosely on Keep a Changelog, with an emphasis on practical p
 * Example Mealie-compatible recipe JSON
 * Mealie integration placeholder and future design notes
 * Contribution guidelines
+* Initial end-to-end Mealie import testing with generated Schema.org Recipe JSON
 
 ### Changed
 

@@ -191,9 +191,23 @@ The core planner should continue to work without external APIs.
 
 # Testing
 
-Future releases should introduce repeatable prompt tests.
+Because language-model output is nondeterministic, testing should distinguish between strict structural requirements and qualitative planning behavior.
 
-Possible test cases include:
+## Completed Manual Tests
+
+* [x] Generate a seven-dinner weekly meal plan using the default configuration
+* [x] Export a selected generated recipe as Schema.org Recipe JSON
+* [x] Confirm exported recipe JSON is syntactically valid
+* [x] Import generated Schema.org Recipe JSON into a real Mealie installation
+* [x] Confirm Mealie creates the imported recipe successfully
+
+The initial end-to-end Mealie test used a generated chicken recipe exported from AI Meal Planner and imported through Mealie's JSON import workflow.
+
+An initial failed import was traced to an expired or invalid Mealie session returning HTTP `401 Unauthorized`. After logging out and back in, the same recipe JSON imported successfully.
+
+This confirmed that the generated Schema.org Recipe structure was accepted by the tested Mealie installation.
+
+## Future Repeatable Tests
 
 * [ ] correct number of meals generated
 * [ ] correct serving quantities
@@ -206,8 +220,12 @@ Possible test cases include:
 * [ ] valid multiple-recipe exports
 * [ ] ISO 8601 time formatting
 * [ ] valid JSON syntax
+* [ ] automated Schema.org structure validation
+* [ ] repeat Mealie import testing after major prompt changes
+* [ ] test with multiple language models
+* [ ] test with future Mealie versions
 
-Because language-model output is nondeterministic, tests may need to distinguish between strict structural requirements and qualitative planning behavior.
+Because language-model output is nondeterministic, future automated tests may need to distinguish between structural failures and qualitative planning differences.
 
 # Non-Goals
 
