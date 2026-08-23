@@ -42,6 +42,8 @@ Version 1.0 focuses on making the existing working prompt clean, documented, and
 * [x] Preserve final consistency validation
 
 # Version 1.1 — Portable Meal Plan Exports
+* [x] Define a human-readable Markdown recipe export format
+* [x] Define a mobile-friendly consolidated shopping checklist format
 
 Version 1.1 focuses on making AI Meal Planner useful outside any specific AI interface or recipe-management application.
 
@@ -72,6 +74,7 @@ recipes/
 * [ ] Preserve grocery-store section organization
 * [ ] Use practical purchase quantities
 * [ ] Make the output easy to copy into common notes and checklist applications
+* [ ] Support shopping lists scoped to one recipe, selected recipes, or the full weekly plan
 
 Example:
 
