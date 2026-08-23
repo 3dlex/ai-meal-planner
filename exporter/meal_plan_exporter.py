@@ -17,8 +17,8 @@ The exporter:
   * excludes pantry items from the shopping list
   * excludes optional items by default
   * consolidates equivalent ingredient names
-  * converts compatible volume units (tsp/tbsp/cup)
-  * converts compatible weight units (oz/lb)
+  * converts compatible volume units (tsp/tbsp/cup/pint/quart)
+  * consolidates compatible weight units while preserving source-friendly oz/lb output
   * writes shopping-list.md and shopping-list.txt
   * writes normalized selected recipe JSON
   * optionally creates a ZIP bundle
@@ -170,7 +170,13 @@ UNIT_ALIASES = {
 # Conversion bases:
 # volume -> tsp
 # weight -> oz
-VOLUME_TO_TSP = {"tsp": 1.0, "tbsp": 3.0, "cup": 48.0}
+VOLUME_TO_TSP = {
+    "tsp": 1.0,
+    "tbsp": 3.0,
+    "cup": 48.0,
+    "pint": 96.0,
+    "quart": 192.0,
+}
 WEIGHT_TO_OZ = {"oz": 1.0, "lb": 16.0}
 
 
@@ -199,9 +205,12 @@ def format_number(value: float) -> str:
         0.125: "1/8",
         0.25: "1/4",
         0.333333: "1/3",
+        0.375: "3/8",
         0.5: "1/2",
+        0.625: "5/8",
         0.666667: "2/3",
         0.75: "3/4",
+        0.875: "7/8",
     }
     frac = value - math.floor(value)
     for k, label in common.items():
@@ -348,11 +357,17 @@ def consolidate(ingredients: Iterable[Ingredient]) -> tuple[list[dict[str, Any]]
             other[x.unit].append(x)
 
         if vol:
-            total_tsp = sum(x.quantity * VOLUME_TO_TSP[x.unit] for x in vol)  # type: ignore[operator]
-            # Prefer cup >= 1 cup, tbsp >= 1 tbsp, else tsp.
-            if total_tsp >= 48:
+            total_tsp = sum(x.quantity * VOLUME_TO_TSP[x.unit] for x in vol)
+
+            input_units = {x.unit for x in vol}
+
+            if "quart" in input_units:
+                qty, unit = total_tsp / 192, "quart"
+            elif "pint" in input_units:
+                qty, unit = total_tsp / 96, "pint"
+            elif "cup" in input_units:
                 qty, unit = total_tsp / 48, "cup"
-            elif total_tsp >= 3:
+            elif "tbsp" in input_units:
                 qty, unit = total_tsp / 3, "tbsp"
             else:
                 qty, unit = total_tsp, "tsp"
@@ -360,10 +375,13 @@ def consolidate(ingredients: Iterable[Ingredient]) -> tuple[list[dict[str, Any]]
 
         if weight:
             total_oz = sum(x.quantity * WEIGHT_TO_OZ[x.unit] for x in weight)  # type: ignore[operator]
-            if total_oz >= 16:
+            input_units = {x.unit for x in weight}
+
+            if "lb" in input_units:
                 qty, unit = total_oz / 16, "lb"
             else:
                 qty, unit = total_oz, "oz"
+
             quantified.append(make_item(name, qty, unit, weight))
 
         for unit, unit_items in other.items():
@@ -400,18 +418,84 @@ def make_item(name: str, qty: float, unit: str, items: list[Ingredient]) -> dict
     }
 
 
+COUNT_NAME_PLURALS = {
+    "avocado": "avocados",
+    "chicken breast": "chicken breasts",
+    "chicken thigh": "chicken thighs",
+    "corn tortilla": "corn tortillas",
+    "egg": "eggs",
+    "eggplant": "eggplants",
+    "flour tortilla": "flour tortillas",
+    "green onion": "green onions",
+    "green onions": "green onions",
+    "lemon": "lemons",
+    "lime": "limes",
+    "orange bell pepper": "orange bell peppers",
+    "pork chop": "pork chops",
+    "red bell pepper": "red bell peppers",
+    "red onion": "red onions",
+    "salmon fillet": "salmon fillets",
+    "yellow bell pepper": "yellow bell peppers",
+    "yellow onion": "yellow onions",
+    "zucchini": "zucchini",
+}
+
+
+def pluralize_count_name(name: str) -> str:
+    if name in COUNT_NAME_PLURALS:
+        return COUNT_NAME_PLURALS[name]
+
+    if name.endswith("s"):
+        return name
+
+    if name.endswith(("x", "z", "ch", "sh")):
+        return name + "es"
+    if len(name) > 1 and name.endswith("y") and name[-2] not in "aeiou":
+        return name[:-1] + "ies"
+    return name + "s"
+
+
 def display_name(name: str) -> str:
     return name
 
 
 def render_line(item: dict[str, Any]) -> str:
-    qty = format_number(float(item["quantity"]))
+    quantity = float(item["quantity"])
+    qty = format_number(quantity)
     unit = item["unit"]
     name = display_name(item["name"])
-    if unit:
-        text = f"{qty} {unit} {name}"
+
+    if unit == "piece":
+        display_item_name = name if quantity <= 1.0 else pluralize_count_name(name)
+        text = f"{qty} {display_item_name}"
+    elif unit:
+        display_unit = unit
+
+        if quantity > 1.0:
+            plurals = {
+                "clove": "cloves",
+                "cup": "cups",
+                "tbsp": "tbsp",
+                "tsp": "tsp",
+                "oz": "oz",
+                "lb": "lb",
+                "can": "cans",
+                "bunch": "bunches",
+                "fillet": "fillets",
+                "stalk": "stalks",
+                "ear": "ears",
+                "loaf": "loaves",
+                "jar": "jars",
+                "head": "heads",
+                "pint": "pints",
+                "quart": "quarts",
+            }
+            display_unit = plurals.get(unit, unit)
+
+        text = f"{qty} {display_unit} {name}"
     else:
         text = f"{qty} {name}"
+
     if item.get("alternatives"):
         text += " (alternative: " + " / ".join(item["alternatives"]) + ")"
     return text
