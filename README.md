@@ -54,19 +54,23 @@ User
 AI Meal Planner
  |
  +-- Dinner recipes
- +-- Ingredient reuse
- +-- Best-effort weekly grocery list
+ +-- Structured per-recipe ingredient data
  +-- Prep opportunities
  |
- | "Export Monday, Wednesday, and Friday"
+ | calls export_meal_plan
  v
-Portable Recipe Export
+Open WebUI Deterministic Export Tool
  |
- +-- Markdown recipe content
- +-- Structured ingredient data
+ +-- authoritative Markdown shopping list
+ +-- pantry filtering
+ +-- optional-ingredient filtering
+ +-- compatible-unit consolidation
+
+Optional standalone workflow:
+Structured ingredient JSON
  |
  v
-Deterministic Exporter
+CLI Deterministic Exporter
  |
  +-- shopping-list.md
  +-- shopping-list.txt
@@ -77,8 +81,14 @@ Deterministic Exporter
 
 The AI handles meal planning and produces structured per-recipe ingredient data.
 
-The deterministic exporter handles shopping-list arithmetic, pantry filtering,
-unit normalization, selected-recipe scope, and portable file generation.
+In Open WebUI, the AI calls the `export_meal_plan` tool after the recipes are
+finalized. The tool returns the authoritative consolidated Markdown shopping
+list and handles pantry filtering, optional-ingredient filtering, compatible
+unit consolidation, and selected-recipe scope.
+
+The standalone CLI exporter remains available for file-oriented workflows. It
+can generate Markdown and plain-text shopping lists, normalized structured data,
+an export manifest, and an optional ZIP bundle.
 
 Mealie remains an optional integration. When requested, AI Meal Planner can also
 export recipes as Schema.org Recipe JSON for manual import into Mealie.
@@ -142,7 +152,8 @@ AI Meal Planner can:
 * avoid the same primary protein on consecutive nights
 * reuse ingredients across recipes
 * reduce unnecessary food waste
-* create a consolidated grocery list
+* create structured per-recipe ingredient data
+* call deterministic shopping-list tooling when available
 * suggest optional prep-ahead opportunities
 
 ### Deterministic Exporter
@@ -236,6 +247,18 @@ platforms/openwebui/
 
 The Open WebUI integration is intended to make it easy to use AI Meal Planner as a reusable system prompt or model configuration.
 
+The tested Open WebUI workflow also uses the `AI Meal Planner Exporter` tool,
+implemented in:
+
+```text
+exporter/openwebui_tool.py
+```
+
+When attached to the meal-planner model, the model can call
+`export_meal_plan` automatically after generating the structured ingredient
+records. The returned shopping list is treated as authoritative rather than
+being recalculated by the language model.
+
 Additional platforms may be added later without changing the canonical prompt.
 
 ## Mealie Support
@@ -292,12 +315,14 @@ ai-meal-planner/
 │
 ├── exporter/
 │   ├── EXPORTER_README.md
-│   └── meal_plan_exporter.py
+│   ├── meal_plan_exporter.py
+│   └── openwebui_tool.py
 │
 ├── examples/
 │   ├── weekly-plan.md
 │   ├── portable-recipe.md
 │   ├── shopping-list.md
+│   ├── structured-ingredients.json
 │   └── mealie-recipe.json
 │
 ├── docs/
@@ -346,8 +371,37 @@ Platform-specific installation instructions are provided separately.
 
 ## Exporter Quick Start
 
-The deterministic exporter consumes structured ingredient JSON produced by the
-meal planner.
+The project now has two deterministic exporter paths.
+
+### Open WebUI Tool
+
+For Open WebUI, create a Workspace Tool from:
+
+```text
+exporter/openwebui_tool.py
+```
+
+Recommended tool metadata:
+
+```text
+Name: AI Meal Planner Exporter
+ID: ai_meal_planner_exporter
+```
+
+Attach the tool to the meal-planner model. With the canonical prompt in
+`prompt/meal-planner.md`, a normal request such as:
+
+```text
+plan next weeks meals
+```
+
+should cause the model to generate structured ingredient data internally, call
+`export_meal_plan`, and present the tool-generated shopping list.
+
+### Standalone CLI Exporter
+
+The CLI exporter consumes structured ingredient JSON produced by the meal
+planner.
 
 Export the full input set:
 
@@ -442,12 +496,26 @@ Where practical, recipe interchange should use standards such as Schema.org Reci
 
 API keys, passwords, access tokens, and private server information should never be embedded in the canonical prompt or committed to the repository.
 
+## Current Validation Status
+
+The deterministic shopping-list workflow has been tested with:
+
+* a synthetic multi-recipe fixture
+* a real seven-recipe weekly plan
+* Open WebUI native tool calling
+* a full-week `export_meal_plan` call
+* selected-recipe scope for Monday, Wednesday, and Friday
+* portable whole-week export behavior
+
+The current baseline is usable, but remaining cleanup includes ingredient-name
+normalization, category coverage, and tighter pantry classification rules.
+
 ## Roadmap
 
 Planned work includes:
 
-* testing the deterministic exporter against full-week structured recipe data
 * explicit grocery purchase-size conversion rules
+* continued normalization and category coverage for structured ingredients
 * additional user preferences
 * testing with multiple language models
 * direct Mealie API integration

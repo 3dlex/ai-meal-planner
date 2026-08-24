@@ -1,43 +1,29 @@
 #!/usr/bin/env python3
 """
-AI Meal Planner deterministic exporter.
+title: AI Meal Planner Exporter
+author: OpenAI / project contributor
+version: 0.1.0
+description: Deterministically converts structured AI meal-plan ingredient data into a consolidated Markdown shopping list.
 
-Input:
-    JSON containing either:
-      1) one recipe record:
-         {"day": "...", "recipe": "...", "ingredients": [...]}
-      2) an array of recipe records:
-         [{...}, {...}]
-      3) an object containing a "recipes" array:
-         {"recipes": [{...}, {...}]}
-
-The exporter:
-  * selects one, several, or all recipes
-  * preserves recipe boundaries in input
-  * excludes pantry items from the shopping list
-  * excludes optional items by default
-  * consolidates equivalent ingredient names
-  * converts compatible volume units (tsp/tbsp/cup/pint/quart)
-  * consolidates compatible weight units while preserving source-friendly oz/lb output
-  * writes shopping-list.md and shopping-list.txt
-  * writes normalized selected recipe JSON
-  * optionally creates a ZIP bundle
-
-It deliberately does NOT guess missing quantities and does NOT invent
-store/package sizes. Those can be added later as explicit deterministic rules.
+This Open WebUI Tool is intentionally narrow:
+- accepts structured recipe records
+- excludes pantry items
+- excludes optional ingredients by default
+- consolidates compatible quantities deterministically
+- returns a Markdown shopping list
+- does not guess package sizes
+- does not access arbitrary files
+- does not execute shell commands
 """
+
 
 from __future__ import annotations
 
-import argparse
 import json
 import math
 import re
-import shutil
-import sys
 from collections import defaultdict
 from dataclasses import dataclass
-from pathlib import Path
 from typing import Any, Iterable
 
 
@@ -263,15 +249,28 @@ class Ingredient:
         )
 
 
-def load_recipes(path: Path) -> list[dict[str, Any]]:
-    data = json.loads(path.read_text(encoding="utf-8"))
+def normalize_recipe_input(data: Any) -> list[dict[str, Any]]:
+    """
+    Accept:
+      1) one recipe object
+      2) an array of recipe objects
+      3) an object containing a "recipes" array
+    """
+    if isinstance(data, str):
+        try:
+            data = json.loads(data)
+        except json.JSONDecodeError as exc:
+            raise ValueError(f"recipes must be valid JSON when passed as a string: {exc}") from exc
+
     if isinstance(data, dict) and "recipes" in data:
         data = data["recipes"]
     elif isinstance(data, dict) and {"day", "recipe", "ingredients"} <= set(data):
         data = [data]
 
     if not isinstance(data, list):
-        raise ValueError("Input JSON must be a recipe object, recipe array, or {'recipes': [...]} object")
+        raise ValueError(
+            "Input must be a recipe object, recipe array, or {'recipes': [...]} object"
+        )
 
     recipes: list[dict[str, Any]] = []
     for i, rec in enumerate(data, start=1):
@@ -283,6 +282,7 @@ def load_recipes(path: Path) -> list[dict[str, Any]]:
         if not isinstance(rec["ingredients"], list):
             raise ValueError(f"Recipe #{i}: 'ingredients' must be an array")
         recipes.append(rec)
+
     return recipes
 
 
@@ -445,10 +445,7 @@ def pluralize_count_name(name: str) -> str:
     if name in COUNT_NAME_PLURALS:
         return COUNT_NAME_PLURALS[name]
 
-    if name.endswith("s"):
-        return name
-
-    if name.endswith(("x", "z", "ch", "sh")):
+    if name.endswith(("s", "x", "z", "ch", "sh")):
         return name + "es"
     if len(name) > 1 and name.endswith("y") and name[-2] not in "aeiou":
         return name[:-1] + "ies"
@@ -528,16 +525,15 @@ def gather_ingredients(
             out.append(ing)
     return out
 
-
-def write_markdown(
-    path: Path,
+def build_markdown_shopping_list(
     selected: list[dict[str, Any]],
     quantified: list[dict[str, Any]],
     unquantified: list[dict[str, Any]],
     include_optional: bool,
-) -> None:
+) -> str:
     by_section: dict[str, list[dict[str, Any]]] = defaultdict(list)
     by_section_unq: dict[str, list[dict[str, Any]]] = defaultdict(list)
+
     for item in quantified:
         by_section[item["category"]].append(item)
     for item in unquantified:
@@ -546,6 +542,7 @@ def write_markdown(
     lines = ["# Shopping List", ""]
     lines.append("Recipes included: " + ", ".join(str(r["day"]) for r in selected))
     lines.append("")
+
     if not include_optional:
         lines.append("_Optional ingredients are excluded by default._")
         lines.append("")
@@ -553,153 +550,56 @@ def write_markdown(
     for section in SECTION_ORDER:
         items = by_section.get(section, [])
         unq = by_section_unq.get(section, [])
+
         if not items and not unq:
             continue
+
         lines += [f"## {section}", ""]
+
         for item in sorted(items, key=lambda x: x["name"]):
             lines.append(f"- [ ] {render_line(item)}")
+
         for item in sorted(unq, key=lambda x: x["name"]):
             lines.append(f"- [ ] {render_unquantified(item)}")
+
         lines.append("")
 
-    path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+    return "\n".join(lines).rstrip() + "\n"
 
 
-def write_text(
-    path: Path,
-    selected: list[dict[str, Any]],
-    quantified: list[dict[str, Any]],
-    unquantified: list[dict[str, Any]],
-    include_optional: bool,
-) -> None:
-    by_section: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    by_section_unq: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for item in quantified:
-        by_section[item["category"]].append(item)
-    for item in unquantified:
-        by_section_unq[item["category"]].append(item)
+class Tools:
+    def __init__(self):
+        pass
 
-    lines = ["SHOPPING LIST", ""]
-    lines.append("Recipes included: " + ", ".join(str(r["day"]) for r in selected))
-    if not include_optional:
-        lines.append("Optional ingredients are excluded by default.")
-    lines.append("")
+    def export_meal_plan(
+        self,
+        recipes: list[dict[str, Any]] | dict[str, Any] | str,
+        include_optional: bool = False,
+        select: list[str] | None = None,
+    ) -> str:
+        """
+        Generate a deterministic Markdown shopping list from structured meal-plan data.
 
-    for section in SECTION_ORDER:
-        items = by_section.get(section, [])
-        unq = by_section_unq.get(section, [])
-        if not items and not unq:
-            continue
-        lines.append(section.upper())
-        for item in sorted(items, key=lambda x: x["name"]):
-            lines.append(f"[ ] {render_line(item)}")
-        for item in sorted(unq, key=lambda x: x["name"]):
-            lines.append(f"[ ] {render_unquantified(item)}")
-        lines.append("")
+        :param recipes: Structured recipe data. Accepts a recipe array, one recipe
+                       object, an object containing {"recipes": [...]}, or a JSON string.
+        :param include_optional: Include ingredients explicitly marked optional.
+                                Defaults to False.
+        :param select: Optional list of exact day names or exact recipe names to export.
+                       Omit or pass null to export all recipes.
+        :return: Consolidated Markdown shopping list.
+        """
+        normalized = normalize_recipe_input(recipes)
+        selected = select_recipes(normalized, select)
 
-    path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
-
-
-def write_manifest(
-    path: Path,
-    selected: list[dict[str, Any]],
-    quantified: list[dict[str, Any]],
-    unquantified: list[dict[str, Any]],
-    include_optional: bool,
-) -> None:
-    manifest = {
-        "selected_recipes": [
-            {"day": r["day"], "recipe": r["recipe"]} for r in selected
-        ],
-        "include_optional": include_optional,
-        "shopping_items": quantified,
-        "unquantified_items": unquantified,
-    }
-    path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-
-
-def parse_args() -> argparse.Namespace:
-    p = argparse.ArgumentParser(
-        description="Generate deterministic shopping-list files from AI Meal Planner structured ingredient JSON."
-    )
-    p.add_argument("input", type=Path, help="Structured ingredient JSON file")
-    p.add_argument(
-        "-o", "--output-dir", type=Path, default=Path("meal-plan-export"),
-        help="Output directory (default: meal-plan-export)"
-    )
-    p.add_argument(
-        "-s", "--select", nargs="+",
-        help="Select recipes by day or exact recipe name, e.g. --select Monday Wednesday Friday"
-    )
-    p.add_argument(
-        "--include-optional", action="store_true",
-        help="Include optional ingredients in the generated shopping list"
-    )
-    p.add_argument(
-        "--zip", action="store_true",
-        help="Also create a ZIP archive of the output directory"
-    )
-    return p.parse_args()
-
-
-def main() -> int:
-    args = parse_args()
-
-    try:
-        recipes = load_recipes(args.input)
-        selected = select_recipes(recipes, args.select)
         if not selected:
             raise ValueError("No recipes selected")
 
-        ingredients = gather_ingredients(selected, args.include_optional)
+        ingredients = gather_ingredients(selected, include_optional)
         quantified, unquantified = consolidate(ingredients)
 
-        out = args.output_dir
-        out.mkdir(parents=True, exist_ok=True)
-
-        # Preserve selected structured data, unchanged except selection.
-        (out / "structured-ingredients.json").write_text(
-            json.dumps(selected, indent=2, ensure_ascii=False) + "\n",
-            encoding="utf-8",
+        return build_markdown_shopping_list(
+            selected,
+            quantified,
+            unquantified,
+            include_optional,
         )
-
-        write_markdown(
-            out / "shopping-list.md",
-            selected, quantified, unquantified, args.include_optional
-        )
-        write_text(
-            out / "shopping-list.txt",
-            selected, quantified, unquantified, args.include_optional
-        )
-        write_manifest(
-            out / "export-manifest.json",
-            selected, quantified, unquantified, args.include_optional
-        )
-
-        zip_path = None
-        if args.zip:
-            zip_path = shutil.make_archive(str(out), "zip", root_dir=out)
-
-        print(f"Exported {len(selected)} recipe(s)")
-        print(f"Output directory: {out.resolve()}")
-        print(f"Markdown shopping list: {(out / 'shopping-list.md').resolve()}")
-        print(f"Plain-text shopping list: {(out / 'shopping-list.txt').resolve()}")
-        print(f"Structured data: {(out / 'structured-ingredients.json').resolve()}")
-        print(f"Manifest: {(out / 'export-manifest.json').resolve()}")
-        if zip_path:
-            print(f"ZIP bundle: {Path(zip_path).resolve()}")
-        if unquantified:
-            print(
-                f"Warning: {len(unquantified)} non-pantry ingredient(s) had null quantity; "
-                "they were preserved as 'quantity not specified'.",
-                file=sys.stderr,
-            )
-        return 0
-
-    except (OSError, json.JSONDecodeError, ValueError) as exc:
-        print(f"ERROR: {exc}", file=sys.stderr)
-        return 2
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())

@@ -1,0 +1,150 @@
+[
+  {
+    "day": "Sunday",
+    "recipe": "Grilled Chicken with Corn-Tomato Salad & Herb Quinoa",
+    "ingredients": [
+      { "name": "chicken breast", "quantity": 2, "unit": "piece", "size": "6 oz each, boneless skinless", "preparation": "patted dry", "optional": false, "pantry": false, "alternative": null },
+      { "name": "corn", "quantity": 2, "unit": "ear", "size": "fresh", "preparation": "kernels cut off cob", "optional": false, "pantry": false, "alternative": null },
+      { "name": "cherry tomatoes", "quantity": 1, "unit": "pint", "size": "", "preparation": "halved", "optional": false, "pantry": false, "alternative": null },
+      { "name": "red onion", "quantity": 0.5, "unit": "piece", "size": "", "preparation": "finely diced", "optional": false, "pantry": false, "alternative": null },
+      { "name": "basil", "quantity": 0.25, "unit": "cup", "size": "", "preparation": "chopped", "optional": false, "pantry": false, "alternative": null },
+      { "name": "olive oil", "quantity": 2, "unit": "tbsp", "size": "", "preparation": "divided", "optional": false, "pantry": true, "alternative": null },
+      { "name": "red wine vinegar", "quantity": 1, "unit": "tbsp", "size": "", "preparation": "", "optional": false, "pantry": false, "alternative": null },
+      { "name": "quinoa", "quantity": 0.75, "unit": "cup", "size": "", "preparation": "dry", "optional": false, "pantry": false, "alternative": null },
+      { "name": "water", "quantity": 1.5, "unit": "cup", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": "low-sodium chicken broth" },
+      { "name": "parsley", "quantity": 2, "unit": "tbsp", "size": "", "preparation": "chopped", "optional": false, "pantry": false, "alternative": null },
+      { "name": "lemon", "quantity": 1, "unit": "piece", "size": "", "preparation": "zest and juice", "optional": false, "pantry": false, "alternative": null },
+      { "name": "salt", "quantity": null, "unit": "", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "black pepper", "quantity": null, "unit": "", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null }
+    ]
+  },
+  {
+    "day": "Monday",
+    "recipe": "Shrimp & Zucchini Stir-Fry with Brown Rice",
+    "ingredients": [
+      { "name": "shrimp", "quantity": 12, "unit": "oz", "size": "large", "preparation": "peeled and deveined", "optional": false, "pantry": false, "alternative": null },
+      { "name": "zucchini", "quantity": 2, "unit": "piece", "size": "medium", "preparation": "quartered lengthwise and sliced 1/2 inch thick", "optional": false, "pantry": false, "alternative": null },
+      { "name": "red bell pepper", "quantity": 1, "unit": "piece", "size": "", "preparation": "sliced thin", "optional": false, "pantry": false, "alternative": null },
+      { "name": "garlic", "quantity": 3, "unit": "clove", "size": "", "preparation": "minced", "optional": false, "pantry": false, "alternative": null },
+      { "name": "ginger", "quantity": 1, "unit": "tsp", "size": "", "preparation": "grated", "optional": false, "pantry": false, "alternative": null },
+      { "name": "soy sauce", "quantity": 3, "unit": "tbsp", "size": "", "preparation": "", "optional": false, "pantry": false, "alternative": "tamari" },
+      { "name": "honey", "quantity": 1, "unit": "tbsp", "size": "", "preparation": "", "optional": false, "pantry": false, "alternative": null },
+      { "name": "cornstarch", "quantity": 1, "unit": "tsp", "size": "", "preparation": "", "optional": false, "pantry": false, "alternative": null },
+      { "name": "vegetable oil", "quantity": 2, "unit": "tbsp", "size": "", "preparation": "divided", "optional": false, "pantry": true, "alternative": null },
+      { "name": "brown rice", "quantity": 1, "unit": "cup", "size": "", "preparation": "dry", "optional": false, "pantry": false, "alternative": null },
+      { "name": "green onions", "quantity": 2, "unit": "piece", "size": "", "preparation": "sliced, green parts only", "optional": false, "pantry": false, "alternative": null },
+      { "name": "sesame seeds", "quantity": 1, "unit": "tsp", "size": "", "preparation": "", "optional": false, "pantry": false, "alternative": null },
+      { "name": "salt", "quantity": null, "unit": "", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "black pepper", "quantity": null, "unit": "", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null }
+    ]
+  },
+  {
+    "day": "Tuesday",
+    "recipe": "Turkey & Black Bean Tacos with Cabbage-Lime Slaw",
+    "ingredients": [
+      { "name": "ground turkey", "quantity": 1, "unit": "lb", "size": "93% lean", "preparation": "", "optional": false, "pantry": false, "alternative": null },
+      { "name": "black beans", "quantity": 15, "unit": "oz", "size": "1 can", "preparation": "rinsed and drained", "optional": false, "pantry": false, "alternative": null },
+      { "name": "yellow onion", "quantity": 1, "unit": "piece", "size": "small", "preparation": "diced", "optional": false, "pantry": false, "alternative": null },
+      { "name": "garlic", "quantity": 2, "unit": "clove", "size": "", "preparation": "minced", "optional": false, "pantry": false, "alternative": null },
+      { "name": "chili powder", "quantity": 1, "unit": "tbsp", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "ground cumin", "quantity": 1, "unit": "tsp", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "smoked paprika", "quantity": 0.5, "unit": "tsp", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "cayenne", "quantity": 0.25, "unit": "tsp", "size": "", "preparation": "", "optional": true, "pantry": true, "alternative": null },
+      { "name": "water", "quantity": 0.25, "unit": "cup", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "corn tortillas", "quantity": 8, "unit": "piece", "size": "small", "preparation": "", "optional": false, "pantry": false, "alternative": null },
+      { "name": "green cabbage", "quantity": 2, "unit": "cup", "size": "", "preparation": "shredded", "optional": false, "pantry": false, "alternative": null },
+      { "name": "cilantro", "quantity": 0.25, "unit": "cup", "size": "", "preparation": "chopped", "optional": false, "pantry": false, "alternative": null },
+      { "name": "lime", "quantity": 1, "unit": "piece", "size": "", "preparation": "juice and zest", "optional": false, "pantry": false, "alternative": null },
+      { "name": "olive oil", "quantity": 1, "unit": "tbsp", "size": "", "preparation": "for slaw", "optional": false, "pantry": true, "alternative": null },
+      { "name": "greek yogurt", "quantity": 0.5, "unit": "cup", "size": "", "preparation": "or light sour cream", "optional": true, "pantry": false, "alternative": "light sour cream" },
+      { "name": "hot sauce", "quantity": null, "unit": "", "size": "", "preparation": "", "optional": true, "pantry": true, "alternative": null },
+      { "name": "salt", "quantity": null, "unit": "", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "black pepper", "quantity": null, "unit": "", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null }
+    ]
+  },
+  {
+    "day": "Wednesday",
+    "recipe": "Pan-Seared Pork Chops with Green Beans & Lemon-Herb Quinoa",
+    "ingredients": [
+      { "name": "pork chops", "quantity": 2, "unit": "piece", "size": "bone-in, 3/4 inch thick, ~7 oz each", "preparation": "patted dry", "optional": false, "pantry": false, "alternative": null },
+      { "name": "green beans", "quantity": 1, "unit": "lb", "size": "", "preparation": "trimmed", "optional": false, "pantry": false, "alternative": null },
+      { "name": "quinoa", "quantity": 0.75, "unit": "cup", "size": "", "preparation": "dry", "optional": false, "pantry": false, "alternative": null },
+      { "name": "water", "quantity": 1.5, "unit": "cup", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": "low-sodium chicken broth" },
+      { "name": "parsley", "quantity": 2, "unit": "tbsp", "size": "", "preparation": "chopped", "optional": false, "pantry": false, "alternative": null },
+      { "name": "thyme", "quantity": 1, "unit": "tbsp", "size": "", "preparation": "fresh leaves (or 1 tsp dried)", "optional": false, "pantry": false, "alternative": "1 tsp dried thyme" },
+      { "name": "lemon", "quantity": 1, "unit": "piece", "size": "", "preparation": "zest and juice", "optional": false, "pantry": false, "alternative": null },
+      { "name": "olive oil", "quantity": 3, "unit": "tbsp", "size": "", "preparation": "divided", "optional": false, "pantry": true, "alternative": null },
+      { "name": "garlic", "quantity": 2, "unit": "clove", "size": "", "preparation": "minced", "optional": false, "pantry": false, "alternative": null },
+      { "name": "salt", "quantity": null, "unit": "", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "black pepper", "quantity": null, "unit": "", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null }
+    ]
+  },
+  {
+    "day": "Thursday",
+    "recipe": "Sheet-Pan Salmon with Roasted Eggplant & Bell Peppers",
+    "ingredients": [
+      { "name": "salmon fillet", "quantity": 2, "unit": "piece", "size": "6 oz each, skin-on", "preparation": "patted dry", "optional": false, "pantry": false, "alternative": null },
+      { "name": "eggplant", "quantity": 1, "unit": "piece", "size": "small (or 1/2 large)", "preparation": "cut into 3/4 inch cubes", "optional": false, "pantry": false, "alternative": null },
+      { "name": "red bell pepper", "quantity": 1, "unit": "piece", "size": "", "preparation": "cut into 3/4 inch pieces", "optional": false, "pantry": false, "alternative": null },
+      { "name": "yellow bell pepper", "quantity": 1, "unit": "piece", "size": "", "preparation": "cut into 3/4 inch pieces", "optional": false, "pantry": false, "alternative": null },
+      { "name": "red onion", "quantity": 0.5, "unit": "piece", "size": "", "preparation": "cut into 3/4 inch wedges", "optional": false, "pantry": false, "alternative": null },
+      { "name": "olive oil", "quantity": 3, "unit": "tbsp", "size": "", "preparation": "divided", "optional": false, "pantry": true, "alternative": null },
+      { "name": "za'atar", "quantity": 2, "unit": "tsp", "size": "", "preparation": "", "optional": false, "pantry": false, "alternative": "dried oregano" },
+      { "name": "smoked paprika", "quantity": 1, "unit": "tsp", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "garlic", "quantity": 3, "unit": "clove", "size": "", "preparation": "minced", "optional": false, "pantry": false, "alternative": null },
+      { "name": "lemon", "quantity": 1, "unit": "piece", "size": "", "preparation": "thin slices and juice", "optional": false, "pantry": false, "alternative": null },
+      { "name": "parsley", "quantity": 2, "unit": "tbsp", "size": "", "preparation": "chopped", "optional": false, "pantry": false, "alternative": null },
+      { "name": "salt", "quantity": null, "unit": "", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "black pepper", "quantity": null, "unit": "", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null }
+    ]
+  },
+  {
+    "day": "Friday",
+    "recipe": "Turkey Meatballs in Marinara with Whole-Wheat Spaghetti & Arugula Salad",
+    "ingredients": [
+      { "name": "ground turkey", "quantity": 1, "unit": "lb", "size": "93% lean", "preparation": "", "optional": false, "pantry": false, "alternative": null },
+      { "name": "panko breadcrumbs", "quantity": 0.25, "unit": "cup", "size": "", "preparation": "", "optional": false, "pantry": false, "alternative": null },
+      { "name": "parmesan cheese", "quantity": 0.25, "unit": "cup", "size": "", "preparation": "grated", "optional": false, "pantry": false, "alternative": null },
+      { "name": "egg", "quantity": 1, "unit": "piece", "size": "", "preparation": "", "optional": false, "pantry": false, "alternative": null },
+      { "name": "garlic", "quantity": 2, "unit": "clove", "size": "", "preparation": "minced, divided", "optional": false, "pantry": false, "alternative": null },
+      { "name": "parsley", "quantity": 1, "unit": "tbsp", "size": "", "preparation": "chopped, divided", "optional": false, "pantry": false, "alternative": null },
+      { "name": "dried oregano", "quantity": 0.5, "unit": "tsp", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "salt", "quantity": null, "unit": "", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "black pepper", "quantity": null, "unit": "", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "marinara sauce", "quantity": 24, "unit": "oz", "size": "1 jar", "preparation": "", "optional": false, "pantry": false, "alternative": null },
+      { "name": "whole-wheat spaghetti", "quantity": 8, "unit": "oz", "size": "", "preparation": "", "optional": false, "pantry": false, "alternative": null },
+      { "name": "arugula", "quantity": 4, "unit": "cup", "size": "", "preparation": "fresh", "optional": false, "pantry": false, "alternative": null },
+      { "name": "cherry tomatoes", "quantity": 0.5, "unit": "cup", "size": "", "preparation": "halved", "optional": false, "pantry": false, "alternative": null },
+      { "name": "parmesan cheese", "quantity": 0.25, "unit": "cup", "size": "", "preparation": "shaved, for salad", "optional": false, "pantry": false, "alternative": null },
+      { "name": "olive oil", "quantity": 2, "unit": "tbsp", "size": "", "preparation": "for salad", "optional": false, "pantry": true, "alternative": null },
+      { "name": "balsamic vinegar", "quantity": 1, "unit": "tbsp", "size": "", "preparation": "", "optional": false, "pantry": false, "alternative": null },
+      { "name": "olive oil", "quantity": 1, "unit": "tbsp", "size": "", "preparation": "for browning meatballs", "optional": false, "pantry": true, "alternative": null }
+    ]
+  },
+  {
+    "day": "Saturday",
+    "recipe": "Chicken & Veggie Sheet-Pan Fajitas with Quick Guacamole",
+    "ingredients": [
+      { "name": "chicken thighs", "quantity": 1, "unit": "lb", "size": "boneless skinless", "preparation": "sliced into strips", "optional": false, "pantry": false, "alternative": null },
+      { "name": "red bell pepper", "quantity": 1, "unit": "piece", "size": "", "preparation": "sliced into strips", "optional": false, "pantry": false, "alternative": null },
+      { "name": "yellow bell pepper", "quantity": 1, "unit": "piece", "size": "", "preparation": "sliced into strips", "optional": false, "pantry": false, "alternative": null },
+      { "name": "orange bell pepper", "quantity": 1, "unit": "piece", "size": "", "preparation": "sliced into strips", "optional": false, "pantry": false, "alternative": null },
+      { "name": "yellow onion", "quantity": 1, "unit": "piece", "size": "large", "preparation": "sliced into strips", "optional": false, "pantry": false, "alternative": null },
+      { "name": "olive oil", "quantity": 2, "unit": "tbsp", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "chili powder", "quantity": 1, "unit": "tbsp", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "ground cumin", "quantity": 1, "unit": "tsp", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "smoked paprika", "quantity": 1, "unit": "tsp", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "garlic powder", "quantity": 0.5, "unit": "tsp", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "onion powder", "quantity": 0.5, "unit": "tsp", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "cayenne", "quantity": 0.25, "unit": "tsp", "size": "", "preparation": "", "optional": true, "pantry": true, "alternative": null },
+      { "name": "flour tortillas", "quantity": 8, "unit": "piece", "size": "small", "preparation": "", "optional": false, "pantry": false, "alternative": "corn tortillas" },
+      { "name": "avocado", "quantity": 1, "unit": "piece", "size": "ripe", "preparation": "", "optional": false, "pantry": false, "alternative": null },
+      { "name": "lime", "quantity": 1, "unit": "piece", "size": "", "preparation": "juice", "optional": false, "pantry": false, "alternative": null },
+      { "name": "cilantro", "quantity": 2, "unit": "tbsp", "size": "", "preparation": "chopped", "optional": false, "pantry": false, "alternative": null },
+      { "name": "greek yogurt", "quantity": 0.25, "unit": "cup", "size": "", "preparation": "or light sour cream", "optional": true, "pantry": false, "alternative": "light sour cream" },
+      { "name": "hot sauce", "quantity": null, "unit": "", "size": "", "preparation": "", "optional": true, "pantry": true, "alternative": null },
+      { "name": "salt", "quantity": null, "unit": "", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null },
+      { "name": "black pepper", "quantity": null, "unit": "", "size": "", "preparation": "", "optional": false, "pantry": true, "alternative": null }
+    ]
+  }
+]
