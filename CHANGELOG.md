@@ -21,6 +21,8 @@ The format is based loosely on Keep a Changelog, with an emphasis on practical p
 * Schema.org Recipe JSON export
 * Single-recipe Mealie export support
 * Multiple-recipe Mealie export support
+* Dedicated `skills/mealie-recipe-export.md` selective Mealie export skill
+* Explicit recipe-fidelity validation for Mealie exports
 * Open WebUI platform documentation
 * Cleaned Open WebUI export
 * Configuration documentation
@@ -31,12 +33,7 @@ The format is based loosely on Keep a Changelog, with an emphasis on practical p
 * Mealie integration placeholder and future design notes
 * Contribution guidelines
 * Initial end-to-end Mealie import testing with generated Schema.org Recipe JSON
-* Deterministic standalone shopping-list exporter
-* Structured per-recipe ingredient export format
-* Real seven-recipe exporter validation fixture
-* Open WebUI `export_meal_plan` tool integration
-* Native Open WebUI tool-calling workflow for authoritative shopping-list generation
-* Selected-recipe deterministic shopping-list export
+* Successful validation of the selective Mealie Recipe Export skill against a real Mealie installation
 
 ### Changed
 
@@ -47,11 +44,8 @@ The format is based loosely on Keep a Changelog, with an emphasis on practical p
 * Removed user-specific and runtime metadata from the public Open WebUI export
 * Reframed Mealie as an optional integration rather than the primary user workflow
 * Prioritized portable recipe, shopping-list, and meal-plan exports ahead of direct Mealie API integration
-* Changed the normal weekly-plan workflow to call `export_meal_plan` instead of relying on model-generated cross-recipe grocery arithmetic
-* Made structured ingredient data the handoff contract between meal planning and deterministic shopping-list generation
-* Updated quantity formatting and compatible unit consolidation for real-world shopping-list output
-* Preserved source-friendly weight units and added pint/quart volume consolidation
-* Improved human-readable count and fraction formatting
+* Changed Mealie export behavior to an explicit, selective workflow rather than automatically exporting every generated recipe
+* Separated Mealie recipe conversion from normal weekly meal-planning behavior
 
 ### Planned
 
@@ -59,7 +53,4 @@ The format is based loosely on Keep a Changelog, with an emphasis on practical p
 * Additional user preferences
 * Additional platform support
 * Repeatable prompt testing
-* Grocery purchase-size conversion rules
-* Additional ingredient normalization and category coverage
-* Tighter pantry-classification guidance
 * Reuse of recipes already stored in Mealie
